@@ -1,5 +1,6 @@
 # Development-specific files
 *.sqlite3
+*.session
 
 # Configs
 .ebextensions/

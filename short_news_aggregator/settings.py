@@ -15,8 +15,9 @@ ALLOWED_HOSTS = [
     env("APP_HOST", default="localhost"),
 ]
 
-
-# Application definition
+PROJECT_APPS = [
+    "sources",
+]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -25,7 +26,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-]
+] + PROJECT_APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -109,3 +110,10 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+TELETHON = {
+    "API_ID": env("TELEGRAM_API_ID"),
+    "API_HASH": env("TELEGRAM_API_HASH"),
+    "DEFAULT_PHONE_NUMBER": env("DEFAULT_TELEGRAM_PHONE_NUMBER"),
+}
