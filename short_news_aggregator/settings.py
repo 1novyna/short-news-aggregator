@@ -17,6 +17,7 @@ ALLOWED_HOSTS = [
 
 PROJECT_APPS = [
     "sources",
+    "keywords",
 ]
 
 INSTALLED_APPS = [
