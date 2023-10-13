@@ -17,7 +17,7 @@ ALLOWED_HOSTS = [
 
 PROJECT_APPS = [
     "sources",
-    "keywords",
+    "groups",
 ]
 
 INSTALLED_APPS = [
@@ -118,3 +118,7 @@ TELETHON = {
     "API_HASH": env("TELEGRAM_API_HASH"),
     "DEFAULT_PHONE_NUMBER": env("DEFAULT_TELEGRAM_PHONE_NUMBER"),
 }
+
+import openai
+
+openai.my_api_key = env("OPENAI_API_KEY")
