@@ -1,17 +1,17 @@
 from django.db import models
 
 
-class TelegramChannel(models.Model):
+class Channel(models.Model):
     username = models.CharField(max_length=32)
 
     def get_absolute_url(self):
         return f"https://www.t.me/{self.username}"
 
     def __str__(self):
-        return f"TelegramChannel({self.username})"
+        return f"Channel({self.username})"
 
 
-class TelegramMessage(models.Model):
+class Message(models.Model):
     class Meta:
         unique_together = [["message_id", "channel"]]
 
@@ -19,7 +19,7 @@ class TelegramMessage(models.Model):
     datetime = models.DateTimeField()
     message_id = models.PositiveIntegerField()
     channel = models.ForeignKey(
-        TelegramChannel,
+        Channel,
         models.RESTRICT,
         related_name="messages",
     )
@@ -28,4 +28,4 @@ class TelegramMessage(models.Model):
         return f"https://www.t.me/{self.channel.username}/{self.message_id}"
 
     def __str__(self):
-        return f"TelegramMessage({self.pk})"
+        return f"Message({self.pk})"

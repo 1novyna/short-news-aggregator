@@ -1,11 +1,11 @@
 from django.contrib import admin
 from django.utils.html import format_html
 
-from sources.models import TelegramChannel, TelegramMessage
+from .models import Channel, Message
 
 
-@admin.register(TelegramChannel)
-class TelegramChannelAdmin(admin.ModelAdmin):
+@admin.register(Channel)
+class ChannelAdmin(admin.ModelAdmin):
     list_display = ["id", "username_with_url", "messages_number"]
 
     @admin.display(description="username")
@@ -23,8 +23,8 @@ class TelegramChannelAdmin(admin.ModelAdmin):
         return obj.messages.count()
 
 
-@admin.register(TelegramMessage)
-class TelegramMessageAdmin(admin.ModelAdmin):
+@admin.register(Message)
+class MessageAdmin(admin.ModelAdmin):
     list_display = ["id", "datetime", "message_url"]
 
     @admin.display(description="message")
