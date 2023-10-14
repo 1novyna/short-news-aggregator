@@ -2,11 +2,13 @@ from django.contrib import admin
 from django.utils.html import format_html
 
 from .models import Channel, Message
+from .forms import ChannelForm
 
 
 @admin.register(Channel)
 class ChannelAdmin(admin.ModelAdmin):
-    list_display = ["id", "username_with_url", "messages_number"]
+    list_display = ["id", "username_with_url", "messages_number", "channel_id"]
+    form = ChannelForm
 
     @admin.display(description="username")
     def username_with_url(self, obj):
