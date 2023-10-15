@@ -7,11 +7,12 @@ from .forms import ChannelForm
 
 @admin.register(Channel)
 class ChannelAdmin(admin.ModelAdmin):
-    list_display = ["id", "username_with_url", "messages_number", "channel_id"]
+    list_display = ["id", "username_with_url", "channel_id", "messages_number"]
     form = ChannelForm
 
     @admin.display(description="username")
     def username_with_url(self, obj):
+        # TODO: Open in new tab
         return format_html(
             '<a href="{0}" alt="{1}">{1}</a>',
             obj.get_absolute_url(),
@@ -27,7 +28,12 @@ class ChannelAdmin(admin.ModelAdmin):
 
 @admin.register(Message)
 class MessageAdmin(admin.ModelAdmin):
-    list_display = ["id", "datetime", "message_url"]
+    list_display = [
+        "id",
+        "datetime",
+        "message_url",
+        "is_embedded",
+    ]
 
     @admin.display(description="message")
     def message_url(self, obj):
@@ -37,3 +43,7 @@ class MessageAdmin(admin.ModelAdmin):
         )
 
     message_url.allow_tags = True
+
+    @admin.display(description="is embedded")
+    def is_embedded(self, obj):
+        return obj.embedding != None

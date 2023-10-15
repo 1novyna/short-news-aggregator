@@ -1,5 +1,16 @@
 from django.db import models
 
+import json
+
+
+class EmbeddingField(models.TextField):
+    def to_python(self, value):
+        return json.loads(value)
+
+    def get_prep_value(self, value):
+        if value:
+            return json.dumps(value)
+
 
 class Channel(models.Model):
     username = models.CharField(max_length=32)
@@ -24,6 +35,7 @@ class Message(models.Model):
         models.RESTRICT,
         related_name="messages",
     )
+    embedding = EmbeddingField(blank=True, null=True)
 
     def get_absolute_url(self):
         return f"https://www.t.me/{self.channel.username}/{self.message_id}"
