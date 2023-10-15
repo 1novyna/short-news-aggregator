@@ -33,6 +33,7 @@ async def save_telegram_messages(messages):
                 datetime=obj.date,
             )
             for obj in messages
+            if obj.message
         ]
     )
     return result

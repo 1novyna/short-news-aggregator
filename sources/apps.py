@@ -1,13 +1,7 @@
 from django.apps import AppConfig
+from datetime import timedelta
 
-from threading import Timer
-from asgiref.sync import async_to_sync
-
-
-class RepeatTimer(Timer):
-    def run(self):
-        while not self.finished.wait(self.interval):
-            self.function(*self.args, **self.kwargs)
+from commons.tasks import RepeatTimer
 
 
 class SourcesConfig(AppConfig):
@@ -20,6 +14,5 @@ class SourcesConfig(AppConfig):
     def start_background_task(self):
         from .tasks import gather_messages
 
-        thread = RepeatTimer(float(10 * 60), async_to_sync(gather_messages))
-        thread.daemon = True
+        thread = RepeatTimer(timedelta(seconds=10), gather_messages, is_async=True)
         thread.start()
