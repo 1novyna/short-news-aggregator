@@ -1,5 +1,6 @@
 from django.contrib import admin
-from django.utils.html import format_html
+
+from commons.admin import ExternalLinkTag
 
 from .models import Channel, Message
 from .forms import ChannelForm
@@ -7,19 +8,23 @@ from .forms import ChannelForm
 
 @admin.register(Channel)
 class ChannelAdmin(admin.ModelAdmin):
-    list_display = ["id", "username_with_url", "channel_id", "messages_number"]
+    list_display = [
+        "id",
+        "username_with_url",
+        "channel_id",
+        "messages_number",
+    ]
     form = ChannelForm
 
-    @admin.display(description="username")
-    def username_with_url(self, obj):
-        # TODO: Open in new tab
-        return format_html(
-            '<a href="{0}" alt="{1}">{1}</a>',
-            obj.get_absolute_url(),
-            obj.username,
-        )
-
-    username_with_url.allow_tags = True
+    username_with_url = admin.display(
+        ExternalLinkTag(
+            href="get_absolute_url",
+            alt="username",
+            inner_text="username",
+            open_new_tab=True,
+        ),
+        description="username",
+    )
 
     @admin.display(description="messages")
     def messages_number(self, obj):
@@ -35,14 +40,15 @@ class MessageAdmin(admin.ModelAdmin):
         "is_embedded",
     ]
 
-    @admin.display(description="message")
-    def message_url(self, obj):
-        return format_html(
-            '<a href="{0}" alt="{0}">{0}</a>',
-            obj.get_absolute_url(),
-        )
-
-    message_url.allow_tags = True
+    message_url = admin.display(
+        ExternalLinkTag(
+            href="get_absolute_url",
+            alt="__str__",
+            inner_text="get_absolute_url",
+            open_new_tab=True,
+        ),
+        description="message",
+    )
 
     @admin.display(description="is embedded")
     def is_embedded(self, obj):
