@@ -2,6 +2,8 @@ from django.conf import settings
 
 from telethon.client import TelegramClient
 from telethon.tl.functions.messages import GetHistoryRequest
+from emoji import replace_emoji
+import re
 
 from sources.models import Channel, Message
 
@@ -29,7 +31,7 @@ async def save_telegram_messages(messages):
             Message(
                 message_id=obj.id,
                 channel=await Channel.objects.aget(channel_id=obj.peer_id.channel_id),
-                text=obj.message,
+                text=clear_text(obj.message),
                 datetime=obj.date,
             )
             for obj in messages
@@ -37,6 +39,16 @@ async def save_telegram_messages(messages):
         ]
     )
     return result
+
+
+def clear_text(text):
+    text = replace_emoji(text, "")
+
+    text = re.sub(r"http\S+|www\S+", "", text)
+
+    text = text.replace("\n", " ").replace("\r", "")
+
+    return text
 
 
 async def get_new_messages(client, username, recent_message_id):
