@@ -1,14 +1,12 @@
 from django.db import models
 
-from sklearn.cluster import KMeans
-import numpy as np
-import pandas as pd
 import json
 
 
 class EmbeddingField(models.TextField):
-    def to_python(self, value):
-        return json.loads(value)
+    def from_db_value(self, value, expression, connection):
+        if value:
+            return json.loads(value)
 
     def get_prep_value(self, value):
         if value:
