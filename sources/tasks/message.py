@@ -3,7 +3,7 @@ from django.conf import settings
 from telethon.client import TelegramClient
 from telethon.tl.functions.messages import GetHistoryRequest
 
-from .models import Channel, Message
+from sources.models import Channel, Message
 
 
 async def gather_messages():
