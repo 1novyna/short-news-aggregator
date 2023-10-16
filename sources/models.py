@@ -1,5 +1,8 @@
 from django.db import models
 
+from sklearn.cluster import KMeans
+import numpy as np
+import pandas as pd
 import json
 
 
@@ -23,6 +26,13 @@ class Channel(models.Model):
         return f"Channel({self.username})"
 
 
+class Cluster(models.Model):
+    digest = models.TextField(default="", blank=True)
+
+    def __str__(self):
+        return f"Cluster({self.id})"
+
+
 class Message(models.Model):
     class Meta:
         unique_together = [["message_id", "channel"]]
@@ -36,6 +46,13 @@ class Message(models.Model):
         related_name="messages",
     )
     embedding = EmbeddingField(blank=True, null=True)
+    cluster = models.ForeignKey(
+        Cluster,
+        models.RESTRICT,
+        related_name="messages",
+        blank=True,
+        null=True,
+    )
 
     def get_absolute_url(self):
         return f"https://www.t.me/{self.channel.username}/{self.message_id}"
