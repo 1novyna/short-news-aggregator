@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from commons.admin import ExternalLinkTag
+from commons.admin import ExternalLinkTag, bool_filter_factory
 
 from .models import Channel, Message
 from .forms import ChannelForm
@@ -39,7 +39,13 @@ class MessageAdmin(admin.ModelAdmin):
         "message_url",
         "is_embedded",
     ]
-
+    list_filter = [
+        bool_filter_factory(
+            "embedding",
+            title="is embedding null",
+            filter_lookup="isnull",
+        )
+    ]
     message_url = admin.display(
         ExternalLinkTag(
             href="get_absolute_url",
