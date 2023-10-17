@@ -16,8 +16,10 @@ class SourcesConfig(AppConfig):
             gather_messages,
             populate_embedding,
             create_clusters,
+            populate_digests,
         )
 
         RepeatTimer(timedelta(minutes=5), gather_messages, is_async=True).start()
         RepeatTimer(timedelta(minutes=1), populate_embedding).start()
         RepeatTimer(timedelta(days=1), create_clusters).start()
+        RepeatTimer(timedelta(minutes=1), populate_digests).start()
