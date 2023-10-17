@@ -12,7 +12,12 @@ class SourcesConfig(AppConfig):
         self.start_background_task()
 
     def start_background_task(self):
-        from .tasks import gather_messages, populate_embedding
+        from .tasks import (
+            gather_messages,
+            populate_embedding,
+            create_clusters,
+        )
 
         RepeatTimer(timedelta(minutes=5), gather_messages, is_async=True).start()
         RepeatTimer(timedelta(minutes=1), populate_embedding).start()
+        RepeatTimer(timedelta(days=1), create_clusters).start()

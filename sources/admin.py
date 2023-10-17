@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from commons.admin import ExternalLinkTag, bool_filter_factory
 
-from .models import Channel, Message
+from .models import Channel, Message, Cluster
 from .forms import ChannelForm
 
 
@@ -25,6 +25,26 @@ class ChannelAdmin(admin.ModelAdmin):
         ),
         description="username",
     )
+
+    @admin.display(description="messages")
+    def messages_number(self, obj):
+        return obj.messages.count()
+
+
+class MessageInline(admin.TabularInline):
+    model = Message
+
+
+@admin.register(Cluster)
+class ClusterAdmin(admin.ModelAdmin):
+    list_display = [
+        "id",
+        "digest",
+        "messages_number",
+    ]
+    inlines = [
+        MessageInline,
+    ]
 
     @admin.display(description="messages")
     def messages_number(self, obj):
