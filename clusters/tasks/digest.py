@@ -2,7 +2,7 @@ from openai import Completion
 from openai.error import RateLimitError
 from tenacity import RetryError
 
-from sources.models import Cluster
+from clusters.models import Cluster
 
 
 def populate_digests():

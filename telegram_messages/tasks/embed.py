@@ -2,7 +2,7 @@ from openai.embeddings_utils import get_embedding
 from openai.error import RateLimitError
 from tenacity import RetryError
 
-from sources.models import Message
+from telegram_messages.models import Message
 
 
 def populate_embedding():

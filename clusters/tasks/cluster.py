@@ -1,4 +1,5 @@
-from sources.models import Message, Cluster
+from clusters.models import Cluster
+from telegram_messages.models import Message
 
 
 def create_clusters():

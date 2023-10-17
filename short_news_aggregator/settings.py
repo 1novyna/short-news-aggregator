@@ -16,7 +16,9 @@ ALLOWED_HOSTS = [
 ]
 
 PROJECT_APPS = [
-    "sources",
+    "telegram_channels",
+    "telegram_messages",
+    "clusters",
     "commons",
 ]
 

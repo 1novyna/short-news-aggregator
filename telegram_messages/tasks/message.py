@@ -5,7 +5,8 @@ from telethon.tl.functions.messages import GetHistoryRequest
 from emoji import replace_emoji
 import re
 
-from sources.models import Channel, Message
+from telegram_messages.models import Message
+from telegram_channels.models import Channel
 
 
 async def gather_messages():
