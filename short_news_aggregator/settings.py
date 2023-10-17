@@ -17,7 +17,6 @@ ALLOWED_HOSTS = [
 
 PROJECT_APPS = [
     "sources",
-    "groups",
     "commons",
 ]
 
