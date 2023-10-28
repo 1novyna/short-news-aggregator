@@ -6,7 +6,9 @@ from telegram_messages.models import Message
 
 
 def populate_embedding():
-    left_messages = Message.objects.filter(embedding__isnull=True).all()
+    left_messages = (
+        Message.objects.filter(embedding__isnull=True).order_by("datetime").all()
+    )
     for message in left_messages:
         try:
             message.embedding = get_embedding(message.text, "text-embedding-ada-002")

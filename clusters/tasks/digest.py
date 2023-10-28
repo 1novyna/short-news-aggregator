@@ -14,10 +14,14 @@ def populate_digests():
             content = "\n".join(texts)
             response = Completion.create(
                 engine="text-davinci-003",
-                prompt=f'Напиши короткий зміст наступних повідомлень.\n\Повідомлення:\n"""\n{content}\n"""\n\nЗміст:',
-                temperature=0,
+                prompt=f"""Ти агрегатор новин.
+                Напиши короткий зміст наступних повідомлень.
+                Повідомлення:
+                ```{content}```
+                """,
                 max_tokens=256,
                 top_p=1,
+                temperature=0,
                 frequency_penalty=0,
                 presence_penalty=0,
             )
