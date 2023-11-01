@@ -18,6 +18,7 @@ ALLOWED_HOSTS = [
 PROJECT_APPS = [
     "sources",
     "groups",
+    "logs",
 ]
 
 INSTALLED_APPS = [
